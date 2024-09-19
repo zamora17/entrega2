@@ -1,0 +1,123 @@
+
+Proyecto: Gestión de Empleados
+
+
+Clase: Empleado.java
+
+
+
+public abstract class Empleado {
+    private String nombre;
+    private String apellido;
+    private int edad;
+
+    public Empleado(String nombre, String apellido, int edad) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.edad = edad;
+    }
+
+    public abstract double calcularSueldo();
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+}
+
+
+
+Clase: EmpleadoAsalariado.java
+
+
+
+public class EmpleadoAsalariado extends Empleado {
+    private double sueldo;
+
+    public EmpleadoAsalariado(String nombre, String apellido, int edad, double sueldo) {
+        super(nombre, apellido, edad);
+        this.sueldo = sueldo;
+    }
+
+    @Override
+    public double calcularSueldo() {
+        return sueldo;
+    }
+}
+
+
+
+Clase: EmpleadoPorHoras.java
+
+
+
+public class EmpleadoPorHoras extends Empleado {
+    private double tarifaPorHora;
+    private int horasTrabajadas;
+
+    public EmpleadoPorHoras(String nombre, String apellido, int edad, double tarifaPorHora, int horasTrabajadas) {
+        super(nombre, apellido, edad);
+        this.tarifaPorHora = tarifaPorHora;
+        this.horasTrabajadas = horasTrabajadas;
+    }
+
+    @Override
+    public double calcularSueldo() {
+        return tarifaPorHora * horasTrabajadas;
+    }
+}
+
+
+
+Clase: GestionEmpleados.java
+
+
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class GestionEmpleados {
+    private List<Empleado> empleados;
+
+    public GestionEmpleados() {
+        empleados = new ArrayList<>();
+    }
+
+    public void agregarEmpleado(Empleado empleado) {
+        empleados.add(empleado);
+    }
+
+    public void calcularSueldos() {
+        for (Empleado empleado : empleados) {
+            System.out.println("Nombre: " + empleado.getNombre() + " " + empleado.getApellido());
+            System.out.println("Sueldo: " + empleado.calcularSueldo());
+        }
+    }
+}
+
+
+
+Clase: Main.java
+
+
+
+public class Main {
+    public static void main(String[] args) {
+        GestionEmpleados gestion = new GestionEmpleados();
+
+        EmpleadoAsalariado empleado1 = new EmpleadoAsalariado("Juan", "Pérez", 30, 5000);
+        EmpleadoPorHoras empleado2 = new EmpleadoPorHoras("María", "Gómez", 25, 20, 40);
+
+        gestion.agregarEmpleado(empleado1);
+        gestion.agregarEmpleado(empleado2);
+
+        gestion.calcularSueldos();
+    }
+}
